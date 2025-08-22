@@ -7,12 +7,12 @@ function App() {
         <h1>Welcome to Our Herbal Ayurvedic Store</h1>
         <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="hair_oil.html">Hair Oils</a></li>
-            <li><a href="skin_care.html">Skin Care</a></li>
-            <li><a href="forum.html">Forum</a></li>
-            <li><a href="about_us.html">About Us</a></li>
-            <li><a href="contact_us.html">Contact Us</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/hair_oil.html">Hair Oils</a></li>
+            <li><a href="/skin_care.html">Skin Care</a></li>
+            <li><a href="/forum.html">Forum</a></li>
+            <li><a href="/about_us.html">About Us</a></li>
+            <li><a href="/contact_us.html">Contact Us</a></li>
           </ul>
         </nav>
         <div className="header-actions">
@@ -86,8 +86,12 @@ function App() {
             </div>
           </div>
           <div className="app-buttons">
-            <a href="#"><img src="images/app-section/google-play-badge.png" alt="Get it on Google Play" /></a>
-            <a href="#"><img src="images/app-section/app-store-badge.png" alt="Download on the App Store" /></a>
+            <a href="https://play.google.com/store" target="_blank" rel="noopener noreferrer">
+              <img src="images/app-section/google-play-badge.png" alt="Get it on Google Play" />
+            </a>
+            <a href="https://www.apple.com/app-store/" target="_blank" rel="noopener noreferrer">
+              <img src="images/app-section/app-store-badge.png" alt="Download on the App Store" />
+            </a>
           </div>
         </div>
         <div className="app-content-right">
@@ -118,24 +122,36 @@ function App() {
             </p>
             <p>+91 9713171999</p>
             <div className="social-icons">
-              <a href="#"><img src="https://via.placeholder.com/30" alt="Facebook" /></a>
-              <a href="#"><img src="https://via.placeholder.com/30" alt="Instagram" /></a>
-              <a href="#"><img src="https://via.placeholder.com/30" alt="YouTube" /></a>
-              <a href="#"><img src="https://via.placeholder.com/30" alt="Twitter" /></a>
-              <a href="#"><img src="https://via.placeholder.com/30" alt="LinkedIn" /></a>
-              <a href="#"><img src="https://via.placeholder.com/30" alt="Pinterest" /></a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://via.placeholder.com/30" alt="Facebook" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://via.placeholder.com/30" alt="Instagram" />
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://via.placeholder.com/30" alt="YouTube" />
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://via.placeholder.com/30" alt="Twitter" />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://via.placeholder.com/30" alt="LinkedIn" />
+              </a>
+              <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer">
+                <img src="https://via.placeholder.com/30" alt="Pinterest" />
+              </a>
             </div>
           </div>
           <div className="footer-section information">
             <h3>Information</h3>
             <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Terms and Conditions</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Privacy Policy for Mobile Apps</a></li>
-              <li><a href="#">Shipping, return and cancellation Policy</a></li>
-              <li><a href="#">International Delivery</a></li>
-              <li><a href="#">For Businesses, Hotels, and Resorts</a></li>
+              <li><a href="/about_us.html">About Us</a></li>
+              <li><a href="/terms.html">Terms and Conditions</a></li>
+              <li><a href="/privacy.html">Privacy Policy</a></li>
+              <li><a href="/privacy_mobile.html">Privacy Policy for Mobile Apps</a></li>
+              <li><a href="/shipping.html">Shipping, return and cancellation Policy</a></li>
+              <li><a href="/international.html">International Delivery</a></li>
+              <li><a href="/business.html">For Businesses, Hotels, and Resorts</a></li>
             </ul>
           </div>
           <div className="footer-section newsletter">
