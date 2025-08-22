@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HairOilProducts from './components/HairOilProducts';
-import ProductDetail from './components/ProductDetail';
-import Cart from './components/Cart';
+import Header from './public/components/Header';
+import Footer from './public/components/Footer';
+import HairOilProducts from './public/components/HairOilProducts';
+import ProductDetail from './public/components/ProductDetail';
+import Cart from './public/components/Cart';
 import './styles/App.css';
 
 // Sample hair oil data
