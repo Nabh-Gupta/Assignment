@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum - Herbal Ayurvedic Community</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+
+        .character-count {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Make ask question button interactive */
+        .ask-question-button {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ask-question-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Herbal Ayurvedic Store</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="hair_oil.html">Hair Oils</a></li>
+                <li><a href="skin_care.html">Skin Care</a></li>
+                <li><a href="forum.html">Forum</a></li>
+                <li><a href="about_us.html">About Us</a></li>
+                <li><a href="contact_us.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <input type="search" id="search-bar" placeholder="Search products...">
+            <button id="cart-btn">🛒</button>
+        </div>
+    </header>
+
+    <main class="forum-page">
+        <section class="forum-hero">
+            <h2>Find Discussions Related To Ayurveda Here</h2>
+        </section>
+        <section class="forum-wrapper" aria-label="Community Forum">
+            <div class="forum-tabs-row">
+                <div class="forum-tabs" role="tablist">
+                    <button class="tab-button active" role="tab" aria-selected="true" data-tab="questions">Questions</button>
+                    <button class="tab-button" role="tab" aria-selected="false" data-tab="thoughts">Thoughts</button>
+                </div>
+                <button class="ask-question-button" id="askQuestionBtn">Ask Question</button>
+            </div>
+
+            <div id="questions" class="forum-section" role="tabpanel">
+                <article class="forum-post">
+                    <header class="post-header">
+                        <img class="avatar" src="https://via.placeholder.com/36" alt="User avatar">
+                        <div class="author-meta">
+                            <strong>Anonymous</strong>
+                            <span class="time">5 days ago</span>
+                        </div>
+                        <button class="post-menu" aria-label="More options">⋮</button>
+                    </header>
+                    <div class="post-body">
+                        <p>Explores the potential benefits of traditional Ayurvedic practices in managing stress and improving mental well-being, examining holistic approaches like herbal remedies, meditation, and lifestyle adjustments.</p>
+                    </div>
+                    <div class="replies-meta">
+                        <span>Replies • 10 reply</span>
+                        <a href="#" class="view-all">View All 9 Replies</a>
+                    </div>
+                    <div class="reply-card">
+                        <header class="reply-header">
+                            <img class="avatar" src="https://via.placeholder.com/36" alt="Doctor avatar">
+                            <div class="author-meta">
+                                <strong>Dr. Mathew Adams</strong>
+                                <span class="time">5 days ago</span>
+                            </div>
+                        </header>
+                        <div class="reply-body">
+                            <p>Ans. Ayurveda offers holistic approaches like herbal remedies, lifestyle adjustments, and relaxation techniques to alleviate stress and support mental well-being. It emphasizes personalized care and natural methods to address the root causes of mental health challenges, promoting balance and harmony in mind and body.</p>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action" aria-label="Likes">23 Likes</button>
+                        <button class="action" aria-label="Replies">10 Reply</button>
+                        <button class="action" aria-label="Saves">3 Saves</button>
+                    </div>
+                </article>
+
+                <article class="forum-post">
+                    <header class="post-header">
+                        <img class="avatar" src="https://via.placeholder.com/36" alt="User avatar">
+                        <div class="author-meta">
+                            <strong>Anonymous</strong>
+                            <span class="time">5 days ago</span>
+                        </div>
+                        <button class="post-menu" aria-label="More options">⋮</button>
+                    </header>
+                    <div class="post-body">
+                        <p>Explores the potential benefits of traditional Ayurvedic practices in managing stress and improving mental well-being, examining holistic approaches like herbal remedies, meditation, and lifestyle adjustments.</p>
+                    </div>
+                    <div class="replies-meta">
+                        <span>Replies • 1 reply</span>
+                    </div>
+                    <div class="reply-card">
+                        <header class="reply-header">
+                            <img class="avatar" src="https://via.placeholder.com/36" alt="Doctor avatar">
+                            <div class="author-meta">
+                                <strong>Dr. Mathew Adams</strong>
+                                <span class="time">5 days ago</span>
+                            </div>
+                        </header>
+                        <div class="reply-body">
+                            <p>Ans. Ayurveda offers holistic approaches like herbal remedies, lifestyle adjustments, and relaxation techniques to alleviate stress and support mental well-being. It emphasizes personalized care and natural methods to address the root causes of mental health challenges, promoting balance and harmony in mind and body.</p>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action" aria-label="Likes">23 Likes</button>
+                        <button class="action" aria-label="Replies">1 Reply</button>
+                        <button class="action" aria-label="Saves">3 Saves</button>
+                    </div>
+                </article>
+
+                <article class="forum-post">
+                    <header class="post-header">
+                        <img class="avatar" src="https://via.placeholder.com/36" alt="User avatar">
+                        <div class="author-meta">
+                            <strong>Anonymous</strong>
+                            <span class="time">5 days ago</span>
+                        </div>
+                        <button class="post-menu" aria-label="More options">⋮</button>
+                    </header>
+                    <div class="post-body">
+                        <p>Explores the potential benefits of traditional Ayurvedic practices in managing stress and improving mental well-being, examining holistic approaches like herbal remedies, meditation, and lifestyle adjustments.</p>
+                    </div>
+                    <div class="replies-meta">
+                        <span>Replies • 10 reply</span>
+                        <a href="#" class="view-all">View All 9 Replies</a>
+                    </div>
+                    <div class="reply-card">
+                        <header class="reply-header">
+                            <img class="avatar" src="https://via.placeholder.com/36" alt="Doctor avatar">
+                            <div class="author-meta">
+                                <strong>Dr. Mathew Adams</strong>
+                                <span class="time">5 days ago</span>
+                            </div>
+                        </header>
+                        <div class="reply-body">
+                            <p>Ans. Ayurveda offers holistic approaches like herbal remedies, lifestyle adjustments, and relaxation techniques to alleviate stress and support mental well-being. It emphasizes personalized care and natural methods to address the root causes of mental health challenges, promoting balance and harmony in mind and body.</p>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action" aria-label="Likes">23 Likes</button>
+                        <button class="action" aria-label="Replies">10 Reply</button>
+                        <button class="action" aria-label="Saves">3 Saves</button>
+                    </div>
+                </article>
+            </div>
+
+            <div id="thoughts" class="forum-section" role="tabpanel" style="display: none;">
+                <p>Share your thoughts with the community.</p>
+            </div>
+        </section>
+        <div class="load-more-wrap">
+            <button class="load-more">Load More</button>
+        </div>
+    </main>
+
+    <!-- Ask Question Modal -->
+    <div id="askQuestionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ask a Question</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <form id="questionForm">
+                <div class="form-group">
+                    <label for="questionTitle">Question Title *</label>
+                    <input type="text" id="questionTitle" name="questionTitle" placeholder="What would you like to ask about Ayurveda?" required maxlength="100">
+                    <div class="character-count">
+                        <span id="titleCount">0</span>/100 characters
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="questionContent">Question Details *</label>
+                    <textarea id="questionContent" name="questionContent" placeholder="Please provide more details about your question. This helps our community and experts provide better answers." required maxlength="1000"></textarea>
+                    <div class="character-count">
+                        <span id="contentCount">0</span>/1000 characters
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="questionCategory">Category</label>
+                    <select id="questionCategory" name="questionCategory">
+                        <option value="">Select a category</option>
+                        <option value="general">General Ayurveda</option>
+                        <option value="hair-care">Hair Care</option>
+                        <option value="skin-care">Skin Care</option>
+                        <option value="health">Health & Wellness</option>
+                        <option value="products">Products</option>
+                        <option value="lifestyle">Lifestyle</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post Question</button>
+                </div>
+                <div class="success-message" id="successMessage">
+                    Your question has been posted successfully! It will appear in the forum shortly.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section contact-info">
+                <h3>Get in touch</h3>
+                <p>support@amrutam.global</p>
+                <p>Amrutam Pharmaceuticals Pvt Ltd.,<br>chitragupt ganj, Nai Sadak, Lashkar,<br>Gwalior - 474001</p>
+                <p>+91 9713171999</p>
+                <div class="social-icons">
+                    <a href="#"><img src="https://via.placeholder.com/30" alt="Facebook"></a>
+                    <a href="#"><img src="https://via.placeholder.com/30" alt="Instagram"></a>
+                    <a href="#"><img src="https://via.placeholder.com/30" alt="YouTube"></a>
+                    <a href="#"><img src="https://via.placeholder.com/30" alt="Twitter"></a>
+                    <a href="#"><img src="https://via.placeholder.com/30" alt="LinkedIn"></a>
+                    <a href="#"><img src="https://via.placeholder.com/30" alt="Pinterest"></a>
+                </div>
+            </div>
+            <div class="footer-section information">
+                <h3>Information</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Privacy Policy for Mobile Apps</a></li>
+                    <li><a href="#">Shipping, return and cancellation Policy</a></li>
+                    <li><a href="#">International Delivery</a></li>
+                    <li><a href="#">For Businesses, Hotels, and Resorts</a></li>
+                </ul>
+            </div>
+            <div class="footer-section newsletter">
+                <h3>Subscribe to our Newsletter and join<br>Amrutam Family today!</h3>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your Email Address">
+                    <button>Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Forum functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modal elements
+            const modal = document.getElementById('askQuestionModal');
+            const askQuestionBtn = document.getElementById('askQuestionBtn');
+            const closeModal = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const questionForm = document.getElementById('questionForm');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Form elements
+            const questionTitle = document.getElementById('questionTitle');
+            const questionContent = document.getElementById('questionContent');
+            const titleCount = document.getElementById('titleCount');
+            const contentCount = document.getElementById('contentCount');
+
+            // Open modal
+            askQuestionBtn.addEventListener('click', function() {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            });
+
+            // Close modal functions
+            function closeModalFunction() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                questionForm.reset();
+                successMessage.style.display = 'none';
+                titleCount.textContent = '0';
+                contentCount.textContent = '0';
+            }
+
+            closeModal.addEventListener('click', closeModalFunction);
+            cancelBtn.addEventListener('click', closeModalFunction);
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModalFunction();
+                }
+            });
+
+            // Character count updates
+            questionTitle.addEventListener('input', function() {
+                titleCount.textContent = this.value.length;
+            });
+
+            questionContent.addEventListener('input', function() {
+                contentCount.textContent = this.value.length;
+            });
+
+            // Form submission
+            questionForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = {
+                    title: questionTitle.value,
+                    content: questionContent.value,
+                    category: document.getElementById('questionCategory').value,
+                    timestamp: new Date().toISOString(),
+                    author: 'Anonymous', // In a real app, this would be the logged-in user
+                    likes: 0,
+                    replies: 0,
+                    saves: 0
+                };
+
+                // Store the question (in a real app, this would be sent to a server)
+                const questions = JSON.parse(localStorage.getItem('forumQuestions') || '[]');
+                questions.unshift(formData);
+                localStorage.setItem('forumQuestions', JSON.stringify(questions));
+
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    closeModalFunction();
+                    // Optionally refresh the page or add the new question to the DOM
+                    location.reload();
+                }, 2000);
+            });
+
+            // Tab functionality
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const forumSections = document.querySelectorAll('.forum-section');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+                    
+                    // Update active tab button
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+                    
+                    // Show target section
+                    forumSections.forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    document.getElementById(targetTab).style.display = 'block';
+                });
+            });
+
+            // Load questions from localStorage on page load
+            function loadStoredQuestions() {
+                const questions = JSON.parse(localStorage.getItem('forumQuestions') || '[]');
+                const questionsSection = document.getElementById('questions');
+                
+                questions.forEach(question => {
+                    const questionElement = createQuestionElement(question);
+                    questionsSection.insertBefore(questionElement, questionsSection.firstChild);
+                });
+            }
+
+            function createQuestionElement(question) {
+                const article = document.createElement('article');
+                article.className = 'forum-post';
+                article.innerHTML = `
+                    <header class="post-header">
+                        <img class="avatar" src="https://via.placeholder.com/36" alt="User avatar">
+                        <div class="author-meta">
+                            <strong>${question.author}</strong>
+                            <span class="time">Just now</span>
+                        </div>
+                        <button class="post-menu" aria-label="More options">⋮</button>
+                    </header>
+                    <div class="post-body">
+                        <h3>${question.title}</h3>
+                        <p>${question.content}</p>
+                        ${question.category ? `<span class="category-tag">${question.category}</span>` : ''}
+                    </div>
+                    <div class="replies-meta">
+                        <span>Replies • ${question.replies} reply</span>
+                    </div>
+                    <div class="post-actions">
+                        <button class="action" aria-label="Likes">${question.likes} Likes</button>
+                        <button class="action" aria-label="Replies">${question.replies} Reply</button>
+                        <button class="action" aria-label="Saves">${question.saves} Saves</button>
+                    </div>
+                `;
+                return article;
+            }
+
+            // Load stored questions when page loads
+            loadStoredQuestions();
+        });
+    </script>
+    </body>
+    </html>
+
+ 
